@@ -1,14 +1,19 @@
 package com.astrick.sports.data
 
 import android.os.Parcelable
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 
-internal class ContentRepository {
+internal class ContentRepository(
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
     
-    suspend fun getFeaturedSports(): List<Sport> {
+    suspend fun getFeaturedSports(): List<Sport> = withContext(dispatcher) {
         delay(5000)
-        return Sport.createMockedSports()
+        Sport.createMockedSports()
     }
     
 }
