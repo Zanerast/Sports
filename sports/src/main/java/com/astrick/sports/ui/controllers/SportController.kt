@@ -17,24 +17,28 @@ open class SportController {
     private val _sportState = MutableStateFlow<SportState>(SportState.Loading)
     internal val sportState: StateFlow<SportState> = _sportState.asStateFlow()
     
-    internal fun updateSports(sports: List<Sport>) {
+    internal fun onSportsLoaded(sports: List<Sport>) {
         this.sports.clear()
         this.sports.addAll(sports)
+        if (sports.isNotEmpty()) {
+            val randomSport = sports.random()
+            _sportState.update { SportState.Ready(randomSport) }
+        }
     }
     
     fun randomize() {
         val currentState = sportState.value
-        var randomSport = sports.random()
         if (currentState is SportState.Ready) {
+            var randomSport = sports.random()
             while (currentState.sport == randomSport) {
                 randomSport = sports.random()
             }
+            _sportState.update { SportState.Ready(randomSport) }
         }
-        _sportState.update { SportState.Ready(randomSport) }
     }
     
     internal fun restoreSportState(resource: SportState, sports: List<Sport>) {
-        updateSports(sports)
+        onSportsLoaded(sports)
         _sportState.update { resource }
     }
     

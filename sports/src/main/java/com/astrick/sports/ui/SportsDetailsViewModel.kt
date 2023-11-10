@@ -52,7 +52,7 @@ internal class SportsDetailsViewModel(
         
         loadingJob = viewModelScope.launch {
             val sports = sportsRepo.getFeaturedSports()
-            sportDetailsController.updateSports(sports)
+            sportDetailsController.onSportsLoaded(sports)
             sportDetailsController.randomize()
         }
     }
