@@ -39,21 +39,21 @@ internal class SportsDetailsViewModel(
     
     private fun handleSportResource(sportState: SportState) {
         if (sportState == SportState.Empty) {
-            load()
+            loadSports()
         } else if (sportState is SportState.Ready) {
             _sport.update { Resource.Ready(sportState.sport) }
         }
     }
     
     private var loadingJob: Job? = null
-    private fun load() {
+    private fun loadSports() {
         if (loadingJob?.isActive == true)
             loadingJob?.cancel()
         
         loadingJob = viewModelScope.launch {
             val sports = sportsRepo.getFeaturedSports()
             sportDetailsController.onSportsLoaded(sports)
-            sportDetailsController.randomize()
+            sportDetailsController.randomizeNextSport()
         }
     }
     

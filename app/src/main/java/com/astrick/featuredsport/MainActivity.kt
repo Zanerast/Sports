@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     topBar = {
                         SportTopBar(
                             onClickRefresh = {
-                                sportStateController.randomize()
+                                sportStateController.randomizeNextSport()
                             }
                         )
                     },

@@ -41,7 +41,6 @@ internal class SportsDetailsViewModelTest {
     
     @Test
     fun `sport - is updated - When sport state is restored`() = runTest {
-        setup()
         // Given
         viewModel = SportsDetailsViewModel(
             sportsRepo = repo,
@@ -66,7 +65,6 @@ internal class SportsDetailsViewModelTest {
     
     @Test
     fun `sport - loads correctly - When sport state is empty`() = runTest {
-        setup()
         // Given
         viewModel = SportsDetailsViewModel(
             sportsRepo = repo,

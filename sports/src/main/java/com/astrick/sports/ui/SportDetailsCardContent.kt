@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
@@ -35,12 +36,13 @@ internal fun SportDetailsCardContent(
         dampingRatio = Spring.DampingRatioNoBouncy,
         stiffness = Spring.StiffnessMediumLow
     )
+    val padding = dimensionResource(id = R.dimen.padding_small)
     Card(
         modifier = modifier.animateContentSize(animationSpec = springAnimation),
     ) {
         when (randomSport) {
             Resource.Loading -> {
-                LoadingState(modifier = Modifier.padding(8.dp))
+                LoadingState(modifier = Modifier.padding(padding))
             }
             
             is Resource.Ready -> {
@@ -48,13 +50,13 @@ internal fun SportDetailsCardContent(
                 ReadyState(
                     sport = content,
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(padding)
                         .animateContentSize(animationSpec = springAnimation)
                 )
             }
             
             Resource.Error -> {
-                ErrorState(modifier = Modifier.padding(8.dp))
+                ErrorState(modifier = Modifier.padding(padding))
             }
         }
     }
@@ -75,7 +77,9 @@ private fun ReadyState(
         Text(
             text = sport.description,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(
+                top = dimensionResource(id = R.dimen.padding_tiny)
+            )
         )
     }
 }

@@ -18,15 +18,14 @@ open class SportController {
     internal val sportState: StateFlow<SportState> = _sportState.asStateFlow()
     
     internal fun onSportsLoaded(sports: List<Sport>) {
-        this.sports.clear()
-        this.sports.addAll(sports)
+        updateList(sports)
         if (sports.isNotEmpty()) {
             val randomSport = sports.random()
             _sportState.update { SportState.Ready(randomSport) }
         }
     }
     
-    fun randomize() {
+    fun randomizeNextSport() {
         val currentState = sportState.value
         if (currentState is SportState.Ready) {
             var randomSport = sports.random()
@@ -38,8 +37,13 @@ open class SportController {
     }
     
     internal fun restoreSportState(resource: SportState, sports: List<Sport>) {
-        onSportsLoaded(sports)
+        updateList(sports)
         _sportState.update { resource }
+    }
+    
+    private fun updateList(sports: List<Sport>) {
+        this.sports.clear()
+        this.sports.addAll(sports)
     }
     
     internal sealed class SportState {
@@ -47,9 +51,5 @@ open class SportController {
         object Empty : SportState()
         data class Ready(val sport: Sport) : SportState()
     }
-    
-    companion object {
-        internal const val SPORT_KEY = "sport"
-        internal const val SPORTS_KEY = "sports"
-    }
+
 }

@@ -66,4 +66,9 @@ class SportStateController(
         }
     }
     
+    companion object {
+        internal const val SPORT_KEY = "sport"
+        internal const val SPORTS_KEY = "sports"
+    }
+    
 }

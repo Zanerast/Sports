@@ -13,7 +13,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class SportControllerTest {
     
-    lateinit var sportController: SportController
+    private lateinit var sportController: SportController
     
     @Before
     fun setup() {
@@ -34,7 +34,7 @@ class SportControllerTest {
         var previous: Sport? = null
         repeat(1_000) {
             // When
-            sportController.randomize()
+            sportController.randomizeNextSport()
     
             // Then
             val ready = (sportController.sportState.value as SportState.Ready)
@@ -52,7 +52,7 @@ class SportControllerTest {
             .isInstanceOf(SportState.Loading::class.java)
     
         // When
-        sportController.randomize()
+        sportController.randomizeNextSport()
     
         // Then
         val currentState = sportController.sportState.value
