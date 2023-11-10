@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.astrick.sports.data.ContentRepository
 import com.astrick.sports.data.Resource
 import com.astrick.sports.data.Sport
-import com.astrick.sports.ui.SportController.SportState
+import com.astrick.sports.ui.controllers.SportController
+import com.astrick.sports.ui.controllers.SportController.SportState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel responsible for managing the state of the sports details.
+ *
+ * @param sportsRepo The repository responsible for fetching the sports data.
+ * @param sportDetailsController The controller responsible for managing the state of the sports details.
+ */
 internal class SportsDetailsViewModel(
     private val sportsRepo: ContentRepository,
     private val sportDetailsController: SportController

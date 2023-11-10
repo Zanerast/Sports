@@ -5,9 +5,10 @@ import app.cash.turbine.test
 import com.astrick.sports.data.ContentRepository
 import com.astrick.sports.data.Resource
 import com.astrick.sports.data.Sport
-import com.astrick.sports.ui.SportController.*
-import com.astrick.sports.ui.SportController.SportState
-import com.astrick.sports.ui.SportStateController.*
+import com.astrick.sports.ui.controllers.SportController
+import com.astrick.sports.ui.controllers.SportController.*
+import com.astrick.sports.ui.controllers.SportController.SportState
+import com.astrick.sports.ui.controllers.SportStateController.*
 import com.astrick.sports.ui.util.CoroutineDispatcherRule
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi

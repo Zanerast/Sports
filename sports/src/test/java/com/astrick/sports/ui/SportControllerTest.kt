@@ -1,7 +1,8 @@
 package com.astrick.sports.ui
 
 import com.astrick.sports.data.Sport
-import com.astrick.sports.ui.SportController.SportState
+import com.astrick.sports.ui.controllers.SportController
+import com.astrick.sports.ui.controllers.SportController.SportState
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test

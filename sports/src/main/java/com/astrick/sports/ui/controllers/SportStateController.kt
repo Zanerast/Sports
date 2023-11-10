@@ -1,4 +1,4 @@
-package com.astrick.sports.ui
+package com.astrick.sports.ui.controllers
 
 import android.os.Bundle
 import androidx.lifecycle.Lifecycle
@@ -8,49 +8,14 @@ import androidx.savedstate.SavedStateRegistryOwner
 import com.astrick.sports.data.Sport
 import com.astrick.sports.util.getParcelableArrayListWithClass
 import com.astrick.sports.util.getParcelableWithClass
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
-open class SportController {
-    internal val sports = mutableListOf<Sport>()
-    private val _sportState = MutableStateFlow<SportState>(SportState.Loading)
-    internal val sportState: StateFlow<SportState> = _sportState.asStateFlow()
-    
-    internal fun updateSports(sports: List<Sport>) {
-        this.sports.clear()
-        this.sports.addAll(sports)
-    }
-    
-    fun randomize() {
-        val currentState = sportState.value
-        var randomSport = sports.random()
-        if (currentState is SportState.Ready) {
-            while (currentState.sport == randomSport) {
-                randomSport = sports.random()
-            }
-        }
-        _sportState.update { SportState.Ready(randomSport) }
-    }
-    
-    internal fun restoreSportState(resource: SportState, sports: List<Sport>) {
-        updateSports(sports)
-        _sportState.update { resource }
-    }
-    
-    internal sealed class SportState {
-        object Loading : SportState()
-        object Empty : SportState()
-        data class Ready(val sport: Sport) : SportState()
-    }
-    
-    companion object {
-        internal const val SPORT_KEY = "sport"
-        internal const val SPORTS_KEY = "sports"
-    }
-}
-
+/**
+ * This controller is responsible for saving & restoring the state of the [Sport] object
+ * when the associated [SavedStateRegistryOwner] is recreated.
+ *
+ * @param id The id of the [SavedStateRegistry] to be used for saving and restoring state.
+ * @param registryOwner The [SavedStateRegistryOwner] to be used for saving and restoring state.
+ */
 class SportStateController(
     private val id: String,
     private val registryOwner: SavedStateRegistryOwner,
