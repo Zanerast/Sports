@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -25,10 +26,12 @@ fun SportDetailsCardContainer(
     sportStateController: SportStateController,
     modifier: Modifier = Modifier
 ) {
-    val viewModel = SportsDetailsViewModel(
-        sportsRepo = ContentRepository(),
-        sportDetailsController = sportStateController,
-    )
+    val viewModel = remember {
+        SportsDetailsViewModel(
+            sportsRepo = ContentRepository(),
+            sportDetailsController = sportStateController,
+        )
+    }
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(key1 = lifecycleOwner) {
         val lifecycleObserver = object : DefaultLifecycleObserver {

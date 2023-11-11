@@ -7,6 +7,7 @@ import com.astrick.sports.data.Resource
 import com.astrick.sports.data.Sport
 import com.astrick.sports.ui.controllers.SportController
 import com.astrick.sports.ui.controllers.SportController.SportState
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +30,10 @@ internal class SportsDetailsViewModel(
     private val _sport = MutableStateFlow<Resource<Sport>>(Resource.Loading)
     val sport: StateFlow<Resource<Sport>> = _sport.asStateFlow()
     
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        _sport.update { Resource.Error }
+    }
+    
     init {
         viewModelScope.launch {
             sportDetailsController.sportState.collectLatest { sportResource ->
@@ -50,7 +55,7 @@ internal class SportsDetailsViewModel(
         if (loadingJob?.isActive == true)
             loadingJob?.cancel()
         
-        loadingJob = viewModelScope.launch {
+        loadingJob = viewModelScope.launch(exceptionHandler) {
             val sports = sportsRepo.getFeaturedSports()
             sportDetailsController.onSportsLoaded(sports)
             sportDetailsController.randomizeNextSport()
